@@ -1,13 +1,12 @@
 package springtheamproject.project.model;
 
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-//Having this annotation, im thelling JPA to create a Table of Customer Objetcs.
+//Having this annotation, im telling JPA to create a table of customer objects.
 // JPA framework process the object making the SQL for the database
 @Entity
 public class Customer {
