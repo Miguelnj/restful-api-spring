@@ -1,6 +1,8 @@
 package springtheamproject.project.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import springtheamproject.project.model.Customer;
 
@@ -11,8 +13,12 @@ import java.util.List;
 @Service
 public class CustomerService {
 
+    private final CustomerRepository customerRepository;
+
     @Autowired
-    private CustomerRepository customerRepository;
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     public List<Customer> getAllCustomers(){
         List<Customer> customers = new ArrayList<>();
@@ -21,14 +27,28 @@ public class CustomerService {
     }
 
     public void add(Customer customer){
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        customer.setLastUserWhoEdited(user.getUsername());
+        customer.setCreatedBy(user.getUsername());
+        customer.setNullId();
         customerRepository.save(customer);
     }
 
     public Customer getCustomer(String id){
-        return customerRepository.findById(id).get();
+        try{
+            return customerRepository.findById(id).get();
+        }catch(Exception notFoundException){
+            return null;
+        }
     }
 
     public void updateCustomer(Customer customer) {
+
+        if(getCustomer(customer.getId()) == null) return;
+
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        customer.setLastUserWhoEdited(user.getUsername());
+
         customerRepository.save(customer);
     }
 

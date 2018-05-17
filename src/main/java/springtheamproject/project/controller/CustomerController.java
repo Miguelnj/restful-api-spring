@@ -9,9 +9,13 @@ import java.util.List;
 
 @RestController
 public class CustomerController {
-    //CHECK THIS
+
+    private final CustomerService customerService;
+
     @Autowired
-    private CustomerService customerService;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @RequestMapping("/customers")
     public List<Customer> getAllCustomers(){

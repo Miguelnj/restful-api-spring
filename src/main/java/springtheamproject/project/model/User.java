@@ -1,19 +1,21 @@
 package springtheamproject.project.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
     private String id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String accountName;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private boolean status;
 
     public User(){}
@@ -49,12 +51,20 @@ public class User {
         this.password = password;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public boolean getStatus(){
+        return this.status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setNullId() {
+        this.id = null;
     }
 
     @Override
@@ -66,4 +76,5 @@ public class User {
             return toReturn.concat("\nRole: Regular");
         }
     }
+
 }

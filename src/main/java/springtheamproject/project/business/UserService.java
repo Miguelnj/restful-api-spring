@@ -10,8 +10,12 @@ import java.util.List;
 @Service
 public class UserService {
 
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public List<User> getAllUsers(){
         List<User> users = new ArrayList<>();
@@ -20,14 +24,20 @@ public class UserService {
     }
 
     public void add(User user){
+        user.setNullId();
         userRepository.save(user);
     }
 
     public User getUser(String id){
-        return userRepository.findById(id).get();
+        try{
+            return userRepository.findById(id).get();
+        }catch(Exception notFoundException){
+            return null;
+        }
     }
 
     public void updateUser(User user) {
+        if(getUser(user.getId()) == null) return;
         userRepository.save(user);
     }
 

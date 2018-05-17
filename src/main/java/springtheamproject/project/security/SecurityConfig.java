@@ -34,7 +34,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/customers")
                 .authenticated()
                 .antMatchers("/users").hasRole("ADMIN")
+                .and().logout().permitAll()
                 .and().httpBasic();
+
+        http.headers().frameOptions().disable();
 
 
     }

@@ -10,8 +10,12 @@ import java.util.List;
 @RestController
 public class UserController {
     //CHECK THIS
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping("/users")
     public List<User> getAllUsers() {
