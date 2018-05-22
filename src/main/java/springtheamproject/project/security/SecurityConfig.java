@@ -1,24 +1,31 @@
 package springtheamproject.project.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import springtheamproject.project.business.MyUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final MyUserDetailsService myUserDetailsService;
+
+    @Autowired
+    public SecurityConfig(MyUserDetailsService myUserDetailsService) {
+        this.myUserDetailsService = myUserDetailsService;
+    }
+
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("batman").password(passwordEncoder().encode("robin")).roles("USER")
-                .and()
-                .withUser("user").password(passwordEncoder().encode("pass")).roles("ADMIN");
+    protected void configure(AuthenticationManagerBuilder auth){
+        auth.authenticationProvider(authenticationProvider());
     }
 
     @Bean
@@ -26,14 +33,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(myUserDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //here we define the rules for security
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/customers")
-                .authenticated()
-                .antMatchers("/users").hasRole("ADMIN")
+                .antMatchers("/customers").hasAnyRole("USER","ADMIN")
+                .antMatchers("/users").hasAnyRole("ADMIN")
                 .and().logout().permitAll()
                 .and().httpBasic();
 

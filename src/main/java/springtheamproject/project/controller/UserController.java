@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @RequestMapping("/users/{id}")
-    public User getUser(@PathVariable String id) {
+    public User getUser(@PathVariable Long id) {
         return userService.getUser(id);
     }
 
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "users/{id}", method = RequestMethod.DELETE)
-    public void deleteUser(@PathVariable String id) {
+    public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
 }

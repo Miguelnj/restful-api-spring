@@ -23,7 +23,7 @@ public class CustomerController {
     }
 
     @RequestMapping("/customers/{id}")
-    public Customer getCustomer(@PathVariable String id){
+    public Customer getCustomer(@PathVariable Long id){
         return customerService.getCustomer(id);
     }
 
@@ -38,7 +38,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "customers/{id}", method = RequestMethod.DELETE)
-    public void deleteCustomer(@PathVariable String id){
+    public void deleteCustomer(@PathVariable Long id){
         customerService.deleteCustomer(id);
     }
 }

@@ -11,7 +11,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
-    private String id;
+    private Long id;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
@@ -64,7 +64,7 @@ public class Customer {
         this.photoURL = photoURL;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

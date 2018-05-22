@@ -1,8 +1,8 @@
 package springtheamproject.project.business;
 
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import springtheamproject.project.model.Customer;
 
-public interface CustomerRepository extends CrudRepository<Customer,String> {
+public interface CustomerRepository extends JpaRepository<Customer,Long> {
 }

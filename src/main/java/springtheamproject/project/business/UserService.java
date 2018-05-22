@@ -18,9 +18,7 @@ public class UserService {
     }
 
     public List<User> getAllUsers(){
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add);
-        return users;
+        return new ArrayList<>(userRepository.findAll());
     }
 
     public void add(User user){
@@ -28,7 +26,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User getUser(String id){
+    public User getUser(Long id){
         try{
             return userRepository.findById(id).get();
         }catch(Exception notFoundException){
@@ -41,7 +39,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void deleteUser(String id) {
+    public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 }

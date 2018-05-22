@@ -21,9 +21,7 @@ public class CustomerService {
     }
 
     public List<Customer> getAllCustomers(){
-        List<Customer> customers = new ArrayList<>();
-        customerRepository.findAll().forEach(customers::add);
-        return customers;
+        return new ArrayList<>(customerRepository.findAll());
     }
 
     public void add(Customer customer){
@@ -34,7 +32,7 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
-    public Customer getCustomer(String id){
+    public Customer getCustomer(Long id){
         try{
             return customerRepository.findById(id).get();
         }catch(Exception notFoundException){
@@ -52,7 +50,7 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
-    public void deleteCustomer(String id) {
+    public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);
     }
 }

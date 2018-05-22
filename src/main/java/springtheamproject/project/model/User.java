@@ -1,6 +1,8 @@
 package springtheamproject.project.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -8,39 +10,33 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
-    private String id;
-    @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
-    private String accountName;
-    @Column(nullable = false)
+    private Long id;
+    @Column(nullable = false, unique = true)
+    private String username;
+    @Column(nullable = false, length = 60)
     private String password;
-    @Column(nullable = false)
-    private boolean status;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = {@JoinColumn(name="user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    )
+    private Set<Role> roles = new HashSet<>();
 
     public User(){}
 
-    public User(String name, String accountName, String password, boolean status) {
-        this.name = name;
-        this.accountName = accountName;
+    public User(String name, String username, String password, Set<Role> roles) {
+        this.username = username;
         this.password = password;
-        this.status = status;
+        this.roles = roles;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -51,15 +47,15 @@ public class User {
         this.password = password;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setRoles(Set<Role> status) {
+        this.roles = status;
     }
 
-    public boolean getStatus(){
-        return this.status;
+    public Set<Role> getRoles(){
+        return this.roles;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -69,8 +65,8 @@ public class User {
 
     @Override
     public String toString(){
-        String toReturn =  "Account used by: " + name + "\nAccount name: " + accountName + "\nPassword: " +password;
-        if(this.status){
+        String toReturn =  "Account name: " + username + "\nPassword: " +password;
+        if(this.roles.size() > 1){
             return toReturn.concat("\nRole: Administrator");
         }else{
             return toReturn.concat("\nRole: Regular");
