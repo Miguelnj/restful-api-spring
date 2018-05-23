@@ -1,4 +1,4 @@
-package springtheamproject.project.business;
+package springtheamproject.project.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,13 +14,13 @@ public class MyUserPrincipal implements UserDetails {
 
     private User user;
 
-    public MyUserPrincipal(User user) {
+    public MyUserPrincipal(final User user){
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorityList = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> authorityList = new ArrayList<>();
         for (Role role : user.getRoles()) {
             authorityList.add(new SimpleGrantedAuthority(role.getRoleName()));
         }

@@ -1,11 +1,15 @@
 package springtheamproject.project.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import springtheamproject.project.model.Role;
 import springtheamproject.project.model.User;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -23,6 +27,13 @@ public class UserService {
 
     public void add(User user){
         user.setNullId();
+        Set<Role> roles = new HashSet<>();
+        Role role = new Role("ROLE_ADMIN");
+        Role role2 = new Role("ROLE_USER");
+        roles.add(role);
+        roles.add(role2);
+        user.setRoles(roles);
+        user.setPassword(new BCryptPasswordEncoder(11).encode(user.getPassword()));
         userRepository.save(user);
     }
 

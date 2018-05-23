@@ -29,6 +29,7 @@ public class UserController {
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public void addUser(@RequestBody User user) {
+        System.out.println(user.toString());
         userService.add(user);
     }
 

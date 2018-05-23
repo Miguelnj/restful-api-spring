@@ -1,7 +1,6 @@
 package springtheamproject.project.model;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,20 +14,16 @@ public class User {
     private String username;
     @Column(nullable = false, length = 60)
     private String password;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = {@JoinColumn(name="user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")}
-    )
-    private Set<Role> roles = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
-    public User(){}
-
-    public User(String name, String username, String password, Set<Role> roles) {
+    public User(String username, String password, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.roles = roles;
+    }
+
+    public User() {
     }
 
     public String getUsername() {
@@ -47,8 +42,8 @@ public class User {
         this.password = password;
     }
 
-    public void setRoles(Set<Role> status) {
-        this.roles = status;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public Set<Role> getRoles(){
@@ -65,12 +60,12 @@ public class User {
 
     @Override
     public String toString(){
-        String toReturn =  "Account name: " + username + "\nPassword: " +password;
-        if(this.roles.size() > 1){
-            return toReturn.concat("\nRole: Administrator");
-        }else{
-            return toReturn.concat("\nRole: Regular");
+        StringBuilder toReturn = new StringBuilder("Account name: " + username + "\nPassword: " + password);
+        for (Role role :
+                this.roles) {
+            toReturn.append("\n").append(role.getRoleName());
         }
+        return toReturn.toString();
     }
 
 }
