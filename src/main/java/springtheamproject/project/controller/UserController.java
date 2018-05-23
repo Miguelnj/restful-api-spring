@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 public class UserController {
-    //CHECK THIS
+
     private final UserService userService;
 
     @Autowired

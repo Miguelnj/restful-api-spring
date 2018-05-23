@@ -27,6 +27,7 @@ public class UserService {
 
     public void add(User user){
         user.setNullId();
+        /************TEMPORAL*************/
         Set<Role> roles = new HashSet<>();
         Role role = new Role("ROLE_ADMIN");
         Role role2 = new Role("ROLE_USER");
@@ -34,6 +35,7 @@ public class UserService {
         roles.add(role2);
         user.setRoles(roles);
         user.setPassword(new BCryptPasswordEncoder(11).encode(user.getPassword()));
+        /********************************/
         userRepository.save(user);
     }
 
