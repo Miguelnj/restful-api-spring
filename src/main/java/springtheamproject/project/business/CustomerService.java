@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import springtheamproject.project.model.Customer;
+import springtheamproject.project.security.MyUserPrincipal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class CustomerService {
 
         if(getCustomer(customer.getId()) == null) return;
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         customer.setLastUserWhoEdited(user.getUsername());
 
         customerRepository.save(customer);
