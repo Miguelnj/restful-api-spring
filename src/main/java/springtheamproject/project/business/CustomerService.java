@@ -26,7 +26,7 @@ public class CustomerService {
     }
 
     public void add(Customer customer){
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         customer.setLastUserWhoEdited(user.getUsername());
         customer.setCreatedBy(user.getUsername());
         customer.setNullId();

@@ -3,8 +3,6 @@ package springtheamproject.project.model;
 
 import javax.persistence.*;
 
-//Having this annotation, im telling JPA to create a table of customer objects.
-// JPA framework process the object making the SQL for the database
 @Entity
 public class Customer {
 
@@ -87,7 +85,6 @@ public class Customer {
     public void setCreatedBy(String createdBy){
         this.createdBy = createdBy;
     }
-
 
     @Override
     public String toString(){
