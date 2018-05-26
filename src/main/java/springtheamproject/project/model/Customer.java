@@ -14,11 +14,8 @@ public class Customer {
     private String name;
     @Column(nullable = false)
     private String surname;
-    @Column(nullable = false)
     private String photoURL;
-    @Column()
     private String lastUserWhoEdited;
-    @Column()
     private String createdBy;
 
     public Customer(){}
