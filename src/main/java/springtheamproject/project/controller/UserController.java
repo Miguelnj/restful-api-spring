@@ -2,7 +2,7 @@ package springtheamproject.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import springtheamproject.project.business.UserService;
+import springtheamproject.project.service.UserService;
 import springtheamproject.project.model.User;
 
 import java.util.List;

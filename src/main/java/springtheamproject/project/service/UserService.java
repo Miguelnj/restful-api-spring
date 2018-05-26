@@ -1,9 +1,10 @@
-package springtheamproject.project.business;
+package springtheamproject.project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import springtheamproject.project.model.User;
+import springtheamproject.project.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;

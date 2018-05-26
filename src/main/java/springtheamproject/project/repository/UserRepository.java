@@ -1,4 +1,4 @@
-package springtheamproject.project.business;
+package springtheamproject.project.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,10 +1,10 @@
-package springtheamproject.project.business;
+package springtheamproject.project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import springtheamproject.project.model.Customer;
+import springtheamproject.project.repository.CustomerRepository;
 import springtheamproject.project.security.MyUserPrincipal;
 
 import java.util.ArrayList;
