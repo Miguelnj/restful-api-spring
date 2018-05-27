@@ -43,7 +43,7 @@ public class CustomerService {
 
     public void updateCustomer(Customer customer) {
         if(getCustomer(customer.getId()) == null) return;
-        
+
         customer.setCreatedBy(getCustomer(customer.getId()).getCreatedBy());
         MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         customer.setLastUserWhoEdited(user.getUsername());
