@@ -13,7 +13,7 @@ public class ImageService {
 
     public void save(MultipartFile file) throws IOException {
         byte[] fileBytes = file.getBytes();
-        Path dataPath = Paths.get("./src/main/resources/images".concat(file.getOriginalFilename()));
+        Path dataPath = Paths.get("./src/main/resources/images/".concat(file.getOriginalFilename()));
         if(!Files.exists(dataPath)) Files.write(dataPath, fileBytes);
     }
 }
