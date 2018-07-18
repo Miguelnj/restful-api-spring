@@ -85,7 +85,7 @@ public class Customer {
 
     @Override
     public String toString(){
-        return "Name: " + name + "\nSurname: " + surname;
+        return (new StringBuilder("Name: " + name + "\nSurname: " + surname)).toString();
     }
 
 }
