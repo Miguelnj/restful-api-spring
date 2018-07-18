@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 public class UserController {
 
+    public static final String userPath = "/users";
     private final UserService userService;
 
     @Autowired
@@ -17,27 +18,27 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping("/users")
+    @RequestMapping(userPath)
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @RequestMapping("/users/{id}")
+    @RequestMapping(userPath + "/{id}")
     public User getUser(@PathVariable Long id) {
         return userService.getUser(id);
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @RequestMapping(value = userPath, method = RequestMethod.POST)
     public void addUser(@RequestBody User user) {
         userService.add(user);
     }
 
-    @RequestMapping(value = "users", method = RequestMethod.PUT)
+    @RequestMapping(value = userPath, method = RequestMethod.PUT)
     public void updateUser(@RequestBody User user) {
         userService.updateUser(user);
     }
 
-    @RequestMapping(value = "users/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = userPath + "/{id}", method = RequestMethod.DELETE)
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }

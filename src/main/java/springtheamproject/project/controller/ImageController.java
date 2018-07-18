@@ -14,6 +14,7 @@ import java.io.IOException;
 @Controller
 public class ImageController {
 
+    public static final String uploadPath = "/upload";
     private final ImageService imageService;
 
     @Autowired
@@ -21,7 +22,7 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @PostMapping("/upload")
+    @PostMapping(uploadPath)
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file){
         if(file.isEmpty()) return new ResponseEntity<>("Image not selected", HttpStatus.OK);
 

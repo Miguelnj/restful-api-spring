@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import springtheamproject.project.controller.CustomerController;
+import springtheamproject.project.controller.ImageController;
+import springtheamproject.project.controller.UserController;
 
 @Configuration
 @EnableWebSecurity
@@ -38,9 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/customers").authenticated()
-                .antMatchers("/users").hasAnyRole("ADMIN")
-                .antMatchers("/upload").authenticated()
+                .antMatchers(CustomerController.customerPath).authenticated()
+                .antMatchers(UserController.userPath).hasAnyRole("ADMIN")
+                .antMatchers(ImageController.uploadPath).authenticated()
                 .and().logout().permitAll()
                 .and().httpBasic();
 
