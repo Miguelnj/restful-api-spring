@@ -18,27 +18,27 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @RequestMapping(customerPath)
+    @GetMapping(customerPath)
     public List<Customer> getAllCustomers(){
         return customerService.getAllCustomers();
     }
 
-    @RequestMapping(customerPath + "/{id}")
+    @GetMapping(customerPath + "/{id}")
     public Customer getCustomer(@PathVariable Long id){
         return customerService.getCustomer(id);
     }
 
-    @RequestMapping(value = customerPath, method = RequestMethod.POST)
+    @PostMapping(customerPath)
     public void addCustomer(@RequestBody Customer customer){
         customerService.add(customer);
     }
 
-    @RequestMapping(value = customerPath, method = RequestMethod.PUT)
+    @PutMapping(customerPath)
     public void updateCustomer(@RequestBody Customer customer){
         customerService.updateCustomer(customer);
     }
 
-    @RequestMapping(value = customerPath + "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(customerPath + "/{id}")
     public void deleteCustomer(@PathVariable Long id){
         customerService.deleteCustomer(id);
     }
