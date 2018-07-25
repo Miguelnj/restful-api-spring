@@ -33,9 +33,10 @@ public class UserController {
         userService.add(user);
     }
 
-    @PutMapping(userPath)
-    public void updateUser(@RequestBody User user) {
-        userService.updateUser(user);
+    @PutMapping(userPath + "/{id}")
+    public void updateUser(@PathVariable Long id, @RequestBody User user) {
+        System.out.println("ID recibida por path: "+id);
+        userService.updateUser(id, user);
     }
 
     @DeleteMapping(userPath + "/{id}")

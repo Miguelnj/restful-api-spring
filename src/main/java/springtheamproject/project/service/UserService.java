@@ -44,14 +44,18 @@ public class UserService {
         }
     }
 
-    public void updateUser(User user) {
-        if(getUser(user.getId()) == null) return;
-        user.setPassword(new BCryptPasswordEncoder(11).encode(user.getPassword()));
+    public void updateUser(Long id, User user) {
+        User userToChange = getUser(id);
+        if(userToChange == null) return;
+
+        if(user.getUsername() != null) userToChange.setUsername(user.getUsername());
+        if(!user.getRoles().equals(userToChange.getRoles())) userToChange.setRoles(user.getRoles());
+        userToChange.setPassword(new BCryptPasswordEncoder(11).encode(user.getPassword()));
 
         //Updating roles if the current user being modified is who is requesting the update
         MyUserPrincipal loggedUser =
                 (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(loggedUser.getUsername().equals(user.getUsername())){
+        if(loggedUser.getUsername().equals(userToChange.getUsername())){
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             List<GrantedAuthority> newAuthorities = new ArrayList<>();
             for (Role role : user.getRoles()) {
@@ -62,7 +66,7 @@ public class UserService {
             SecurityContextHolder.getContext().setAuthentication(newAuth);
         }
 
-        userRepository.save(user);
+        userRepository.save(userToChange);
     }
 
     public void deleteUser(Long id) {
