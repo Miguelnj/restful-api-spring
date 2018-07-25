@@ -24,7 +24,7 @@ When you run the project by this start point, the entire API start to work.
 ## The Database
 The database used for this API is an embedded "h2" database. This is the one used for reasons of availability. To change the database used you just need to change some lines in the **application.properties** file found in the resources package of the project.
 The database is initialized with a minimum data, which consists in 2 customers and 1 user with both Admin and User roles.
-To initialize the "h2" database with some data, queries must be writen in a file named "data-h2.sql" found in the resources package of the project, which looks like:
+To initialize the "h2" database with some data, queries must be writen in a file named "data.sql" found in the resources package of the project, which looks like:
 ```sql
 INSERT INTO user VALUES(1,'$2a$04$2/y1i84w03REpz.t1nTaYeFsgwaK7FnYnEwdEVLX79cQjHvOglg4u','username')
 INSERT INTO customer VALUES(1,'user1',null,'Miguel','http://localhost:8080/resources/images/imagesPhotoPerson1','Pérez')

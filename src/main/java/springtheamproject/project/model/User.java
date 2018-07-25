@@ -60,10 +60,11 @@ public class User {
 
     @Override
     public String toString(){
-        StringBuilder toReturn = new StringBuilder("Account name: " + username + "\nPassword: " + password);
+        StringBuilder toReturn = new StringBuilder("User " + id + ".\nAccount name: "
+                + username + "\nRoles:");
         for (Role role :
                 this.roles) {
-            toReturn.append("\n").append(role.getRoleName());
+            toReturn.append("\t").append(role.getRoleName());
         }
         return toReturn.toString();
     }

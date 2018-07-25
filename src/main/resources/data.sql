@@ -1,4 +1,4 @@
-INSERT INTO user VALUES(1,'$2a$04$2/y1i84w03REpz.t1nTaYeFsgwaK7FnYnEwdEVLX79cQjHvOglg4u','username')
+INSERT INTO user VALUES(1,'$2a$11$PPiRVXaLAl0GPh7VhQZ53uhvRvK8Ei9DoFmvAxa5mhL8p.yLxJQeW','username')
 INSERT INTO customer VALUES(1,'user1',null,'Miguel','http://localhost:8080/resources/images/imagesPhotoPerson1','Pérez')
 INSERT INTO customer VALUES(2,'user1',null,'Alberto','http://localhost:8080/resources/images/imagesPhotoPerson2','Rodríguez')
 INSERT INTO roles VALUES(1,'ROLE_ADMIN')

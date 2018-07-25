@@ -85,7 +85,8 @@ public class Customer {
 
     @Override
     public String toString(){
-        return (new StringBuilder("Name: " + name + "\nSurname: " + surname)).toString();
+        return (new StringBuilder("Customer " + id + ": " + name + " " + surname +
+                "\nCreated by: " + createdBy + "\nLast edited by: " + lastUserWhoEdited)).toString();
     }
 
 }

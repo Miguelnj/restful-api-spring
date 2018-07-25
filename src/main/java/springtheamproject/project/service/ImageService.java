@@ -15,6 +15,5 @@ public class ImageService {
         byte[] fileBytes = file.getBytes();
         Path dataPath = Paths.get("./src/main/resources/images/" + file.getOriginalFilename());
         Files.write(dataPath, fileBytes);
-
     }
 }
