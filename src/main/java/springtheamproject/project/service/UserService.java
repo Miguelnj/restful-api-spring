@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import springtheamproject.project.model.Role;
 import springtheamproject.project.model.User;
+import springtheamproject.project.model.dtomodel.UserPasswordOnly;
 import springtheamproject.project.repository.UserRepository;
 import springtheamproject.project.security.MyUserPrincipal;
 
@@ -64,6 +65,17 @@ public class UserService {
             Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(),auth.getCredentials(),
                     newAuthorities);
             SecurityContextHolder.getContext().setAuthentication(newAuth);
+        }
+
+        userRepository.save(userToChange);
+    }
+
+    public void updateUserPassword(Long id, UserPasswordOnly user){
+        User userToChange = getUser(id);
+        if(userToChange == null) return;
+
+        if(!user.getPassword().equals(userToChange.getPassword())){
+            userToChange.setPassword(new BCryptPasswordEncoder(11).encode(user.getPassword()));
         }
 
         userRepository.save(userToChange);

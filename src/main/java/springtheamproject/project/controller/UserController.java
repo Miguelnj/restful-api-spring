@@ -2,6 +2,7 @@ package springtheamproject.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springtheamproject.project.model.dtomodel.UserPasswordOnly;
 import springtheamproject.project.service.UserService;
 import springtheamproject.project.model.User;
 
@@ -35,8 +36,12 @@ public class UserController {
 
     @PutMapping(userPath + "/{id}")
     public void updateUser(@PathVariable Long id, @RequestBody User user) {
-        System.out.println("ID recibida por path: "+id);
         userService.updateUser(id, user);
+    }
+
+    @PatchMapping(userPath+"/{id}")
+    public void partialUpdatePassword(@PathVariable Long id, @RequestBody UserPasswordOnly partiaulUser){
+        userService.updateUserPassword(id,partiaulUser);
     }
 
     @DeleteMapping(userPath + "/{id}")
