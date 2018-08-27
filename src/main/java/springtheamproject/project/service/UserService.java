@@ -49,13 +49,32 @@ public class UserService {
         User userToChange = getUser(id);
         if(userToChange == null) return;
 
-        if(user.getUsername() != null) userToChange.setUsername(user.getUsername());
-        if(!user.getRoles().equals(userToChange.getRoles())) userToChange.setRoles(user.getRoles());
-        userToChange.setPassword(new BCryptPasswordEncoder(11).encode(user.getPassword()));
+        //check if the users id is saved in the db with the correct id.
 
-        //Updating roles if the current user being modified is who is requesting the update
-        MyUserPrincipal loggedUser =
-                (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        userRepository.save(user);
+    }
+
+    public void updatePartialUser(Long id, User user) {
+        User userToChange = getUser(id);
+        if (userToChange == null) return;
+
+        if(user.getPassword() != null){
+            userToChange.setPassword(new BCryptPasswordEncoder(11).encode(user.getPassword()));
+        }
+        if(user.getUsername() != null) userToChange.setUsername(user.getUsername());
+        if(user.getRoles() != null){
+            userToChange.setRoles(user.getRoles());
+
+            //Updating roles if the current user being modified is who is requesting the update
+            MyUserPrincipal loggedUser =
+                    (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            changeCurrentRoles(user, userToChange, loggedUser);
+        }
+
+        userRepository.save(userToChange);
+    }
+
+    private void changeCurrentRoles(User user, User userToChange, MyUserPrincipal loggedUser) {
         if(loggedUser.getUsername().equals(userToChange.getUsername())){
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             List<GrantedAuthority> newAuthorities = new ArrayList<>();
@@ -66,22 +85,10 @@ public class UserService {
                     newAuthorities);
             SecurityContextHolder.getContext().setAuthentication(newAuth);
         }
-
-        userRepository.save(userToChange);
-    }
-
-    public void updateUserPassword(Long id, UserPasswordOnly user){
-        User userToChange = getUser(id);
-        if(userToChange == null) return;
-
-        if(!user.getPassword().equals(userToChange.getPassword())){
-            userToChange.setPassword(new BCryptPasswordEncoder(11).encode(user.getPassword()));
-        }
-
-        userRepository.save(userToChange);
     }
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
 }

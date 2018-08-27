@@ -40,8 +40,8 @@ public class UserController {
     }
 
     @PatchMapping(userPath+"/{id}")
-    public void partialUpdatePassword(@PathVariable Long id, @RequestBody UserPasswordOnly partiaulUser){
-        userService.updateUserPassword(id,partiaulUser);
+    public void partialUpdatePassword(@PathVariable Long id, @RequestBody User partialUser){
+        userService.updatePartialUser(id,partialUser);
     }
 
     @DeleteMapping(userPath + "/{id}")
