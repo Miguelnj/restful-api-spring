@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import springtheamproject.project.model.Role;
 import springtheamproject.project.model.User;
-import springtheamproject.project.model.dtomodel.UserPasswordOnly;
 import springtheamproject.project.repository.UserRepository;
 import springtheamproject.project.security.MyUserPrincipal;
 

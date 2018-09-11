@@ -2,7 +2,6 @@ package springtheamproject.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import springtheamproject.project.model.dtomodel.UserPasswordOnly;
 import springtheamproject.project.service.UserService;
 import springtheamproject.project.model.User;
 
