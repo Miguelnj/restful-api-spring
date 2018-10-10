@@ -9,6 +9,8 @@ import springtheamproject.project.security.MyUserPrincipal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @Service
@@ -26,7 +28,7 @@ public class CustomerService {
     }
 
     public void add(Customer customer){
-        MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserPrincipal user = getLoggedUser();
         customer.setLastUserWhoEdited(user.getUsername());
         customer.setCreatedBy(user.getUsername());
         customer.setNullId();
@@ -34,20 +36,21 @@ public class CustomerService {
     }
 
     public Customer getCustomer(Long id){
-        try{
-            return customerRepository.findById(id).get();
-        }catch(Exception notFoundException){
-            return null;
-        }
+        return customerRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     public void updateCustomer(Customer customer) {
         if(getCustomer(customer.getId()) == null) return;
-
         customer.setCreatedBy(getCustomer(customer.getId()).getCreatedBy());
-        MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        customer.setLastUserWhoEdited(user.getUsername());
+        customer.setLastUserWhoEdited(getLoggedUser().getUsername());
         customerRepository.save(customer);
+    }
+
+    private MyUserPrincipal getLoggedUser() {
+        return (MyUserPrincipal) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
     }
 
     public void deleteCustomer(Long id) {

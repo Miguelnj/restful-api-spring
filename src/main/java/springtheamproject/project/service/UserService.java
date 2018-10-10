@@ -15,6 +15,7 @@ import springtheamproject.project.security.MyUserPrincipal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserService {
@@ -37,19 +38,11 @@ public class UserService {
     }
 
     public User getUser(Long id){
-        try{
-            return userRepository.findById(id).get();
-        }catch(Exception notFoundException){
-            return null;
-        }
+        return userRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     public void updateUser(Long id, User user) {
-        User userToChange = getUser(id);
-        if(userToChange == null) return;
-
-        //check if the users id is saved in the db with the correct id.
-
+        if(getUser(id) == null) return;
         userRepository.save(user);
     }
 
@@ -61,16 +54,18 @@ public class UserService {
             userToChange.setPassword(new BCryptPasswordEncoder(11).encode(user.getPassword()));
         }
         if(user.getUsername() != null) userToChange.setUsername(user.getUsername());
-        if(user.getRoles() != null){
-            userToChange.setRoles(user.getRoles());
-
-            //Updating roles if the current user being modified is who is requesting the update
-            MyUserPrincipal loggedUser =
-                    (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            changeCurrentRoles(user, userToChange, loggedUser);
-        }
+        if(user.getRoles() != null) setNewRoles(user, userToChange);
 
         userRepository.save(userToChange);
+    }
+
+    private void setNewRoles(User user, User userToChange) {
+        userToChange.setRoles(user.getRoles());
+        changeCurrentRoles(user, userToChange, loggedUser());
+    }
+
+    private MyUserPrincipal loggedUser() {
+        return (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     private void changeCurrentRoles(User user, User userToChange, MyUserPrincipal loggedUser) {
